@@ -1,0 +1,75 @@
+#parse("header.html")
+<link rel="stylesheet" href="../styles/letter.css">
+
+<div id="main">
+    <div class="zg-wrap zu-main clearfix ">
+        <ul class="letter-chatlist">
+
+
+            #foreach($message in $messages)
+            <li id="msg-item-4009580">
+
+                #if($message.mySelf)
+                <div class="tooltip fade right in">
+
+                    <div class="tooltip-inner letter-chat clearfix">
+                        <div class="letter-info">
+                            <p class="letter-time">$date.format('yyyy-MM-dd HH:mm:ss', $!message.message.createdDate)</p>
+                            <!--<a href="javascript:void(0);" id="del-link" name="$message.conversationId">删除</a>-->
+                        </div>
+                        <p class="chat-content">
+                            $!message.message.content
+                        </p>
+                    </div>
+                    <div class="tooltip-arrow"></div>
+                </div>
+                <a class="list-head" >
+                    <img alt="$!message.user.name" src="$!message.user.headUrl">
+                </a>
+                #else
+                <a class="list-head" >
+                    <img alt="$!message.user.name" src="$!message.user.headUrl">
+                </a>
+                <div class="tooltip fade right in">
+                    <div class="tooltip-arrow"></div>
+                    <div class="tooltip-inner letter-chat clearfix">
+                        <div class="letter-info">
+                            <p class="letter-time">$date.format('yyyy-MM-dd HH:mm:ss', $!message.message.createdDate)</p>
+                            <!--<a href="javascript:void(0);" id="del-link" name="$message.conversationId">删除</a>-->
+                        </div>
+                        <p class="chat-content">
+                            $!message.message.content
+                        </p>
+                    </div>
+                </div>
+                #end
+            </li>
+            #end
+
+
+            <form action="/msg/sendMessage" method="post" id="messageform">
+                <input type="hidden" name="toId" value="$thatUser"/>
+                <div id="zh-question-answer-form-wrap" class="zh-question-answer-form-wrap">
+                    <div class="zm-editable-editor-wrap" style="">
+                        <div class="zm-editable-editor-outer">
+                            <div class="zm-editable-editor-field-wrap">
+                                <textarea name="content" id="content" class="zm-editable-editor-field-element editable" style="font-style: italic;width:100%;"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="zm-command clearfix">
+                            <span class=" zg-right">
+                                <button type="submit" class="submit-button zg-btn-blue">回复</button></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+        </ul>
+
+    </div>
+</div>
+
+
+#parse("footer.html")
