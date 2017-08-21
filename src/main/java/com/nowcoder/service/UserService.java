@@ -96,6 +96,12 @@ public class UserService {
         loginTicketDAO.updateTicketByTicket(1,ticket);
     }
 
+    public void addLikeCount(User user){
+        user.setLikeCount(user.getLikeCount()+1);
+        userDAO.updateLikeCount(user);
+    }
+
+
     private String addTicket(int userId){
         LoginTicket loginTicket = new LoginTicket();
         loginTicket.setUserId(userId);

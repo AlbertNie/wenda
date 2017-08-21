@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.*;
 public interface UserDAO {
     // 注意空格
     String TABLE_NAME = " user ";
-    String INSERT_FIELDS = " name, password, salt, head_url ";
+    String INSERT_FIELDS = " name, password, salt, head_url, like_count ";
     String SELECT_FIELDS = " id, " + INSERT_FIELDS;
 
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS,
@@ -28,4 +28,9 @@ public interface UserDAO {
 
     @Delete({"delete from ", TABLE_NAME, " where id=#{id}"})
     void deleteById(int id);
+
+    @Update({"update ", TABLE_NAME, " set like_count=#{likeCount} where id=#{id}"})
+    void updateLikeCount(User user);
+
+
 }

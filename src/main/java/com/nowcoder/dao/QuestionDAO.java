@@ -29,4 +29,8 @@ public interface QuestionDAO {
     List<Question> selectLatestQuestions(@Param("userId") int userId, @Param("offset") int offset,
                                          @Param("limit") int limit);
 
+    @Select({"select count(id) ", "from", TABLE_NAME,
+            "where user_id=#{userId}"})
+    int selectQuestionCountByUserId(int userId);
+
 }

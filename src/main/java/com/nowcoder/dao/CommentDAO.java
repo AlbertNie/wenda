@@ -34,5 +34,10 @@ public interface CommentDAO {
     @Select({" select" , SELECT_FIELDS," from ",TABLE_NAME,"where id = #{id}"})
     Comment getCommentById(int id);
 
+    @Select({" select count(id) " ," from ",TABLE_NAME,"where user_id = #{userId} and entity_type=#{entityType}"})
+    int getCommentCountByUserId(@Param("userId") int userId,@Param("entityType") int entityType);
+
+    @Select({" select " , SELECT_FIELDS," from ",TABLE_NAME,"where user_id = #{userId}"})
+    List<Comment> getCommentByUserId(int userId);
 
 }

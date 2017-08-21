@@ -3,10 +3,7 @@ package com.nowcoder.controller;
 import com.nowcoder.async.EvenModel;
 import com.nowcoder.async.EvenType;
 import com.nowcoder.async.EventProducer;
-import com.nowcoder.model.Comment;
-import com.nowcoder.model.EntityType;
-import com.nowcoder.model.HostHolder;
-import com.nowcoder.model.Question;
+import com.nowcoder.model.*;
 import com.nowcoder.service.*;
 import com.nowcoder.util.JedisUtil;
 import com.nowcoder.util.RedisKeyUtil;
@@ -52,6 +49,8 @@ public class LikeController {
 
         long likeCount = likeService.like(hostHolder.getUser().getId(),EntityType.TYPE_COMMENT,commentId);
         Comment comment = commentService.getCommentById(commentId);
+        User user = userService.getUser(comment.getUserId());
+        userService.addLikeCount(user);
 
         eventProducer.fireEvent(new EvenModel(EvenType.LIKE).setEntityType(EntityType.TYPE_COMMENT)
                                 .setEntityId(commentId).setActorId(hostHolder.getUser().getId())

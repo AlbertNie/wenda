@@ -28,7 +28,7 @@ public class UnActiveInterceptor implements HandlerInterceptor{
         if (hostHolder.getUser() != null) {
             String URI = httpServletRequest.getRequestURI();
             if (URI != null && !URI.matches("^/index.*")
-                    && !URI.matches("^/") && !URI.matches("^/reglogin.*") &&
+                    && !URI.matches("^/$") && !URI.matches("^/reglogin.*") &&
                     !URI.matches("^/unactive.*") && !URI.matches("^/active.*")) {
 
 

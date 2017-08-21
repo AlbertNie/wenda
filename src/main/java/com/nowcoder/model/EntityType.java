@@ -6,5 +6,6 @@ package com.nowcoder.model;
 public class EntityType {
     public static final int TYPE_QUESTION = 1;
     public static final int TYPE_COMMENT = 2;
+    public static final int TYPE_USER = 3;
 
 }

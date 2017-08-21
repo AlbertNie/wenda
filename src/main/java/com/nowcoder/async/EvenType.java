@@ -7,7 +7,10 @@ public enum EvenType {
     LIKE(0),
     COMMENT(1),
     LOGIN(2),
-    MAIL(3);
+    MAIL(3),
+    QUESTION(4),
+    FOLLOW(5),
+    ADDQUESTION(6);
 
     private int value;
 

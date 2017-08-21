@@ -9,6 +9,15 @@ public class User {
     private String password;
     private String salt;
     private String headUrl;
+    private int likeCount;
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
 
     public User() {
 

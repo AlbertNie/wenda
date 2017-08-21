@@ -2,6 +2,55 @@
 <link rel="stylesheet" href="../styles/index.css">
 <link rel="stylesheet" href="../styles/detail.css">
     <div class="zg-wrap zu-main clearfix " role="main">
+
+
+
+        #if($otherUser)
+        <div class="zm-profile-section-wrap zm-profile-followee-page">
+            <div class="zm-profile-section-list">
+                <div id="zh-profile-follows-list">
+                    <div class="zh-general-list clearfix">
+                        <div class="zm-profile-card zm-profile-section-item zg-clear no-hovercard">
+                                #if($followed)
+                                <div class="zg-right">
+
+                                    <button class="zg-btn zg-btn-unfollow zm-rich-follow-btn small nth-0
+                                    js-follow-user" data-status="1" data-id="$otherUser.id">取消关注</button>
+                                </div>
+                                #else
+                                <div class="zg-right">
+                                    <button class="zg-btn zg-btn-follow zm-rich-follow-btn small nth-0
+                                    js-follow-user" data-id="$otherUser.id">关注</button>
+                                </div>
+                                #end
+                            <a title="Barty" class="zm-item-link-avatar" href="/user/${otherUser.id}">
+                                <img src="/user/${otherUser.headUrl}" class="zm-item-img-avatar">
+                            </a>
+                            <div class="zm-list-content-medium">
+                                <h2 class="zm-list-content-title"><a data-tip="${otherUser.name}" href="/user/${otherUser.id}" class="zg-link" title="${otherUser.name}">${otherUser.name}</a></h2>
+
+                                <div class="zg-big-gray">个人签名，稍后添加</div>
+                                <div class="details zg-gray">
+                                    <a target="_blank" href="/user/${otherUser.id}/followers" class="zg-link-gray-normal">$!followerCount 粉丝</a>
+                                    /
+                                    <a target="_blank" href="/user/${otherUser.id}/followees" class="zg-link-gray-normal">$followeeCount关注</a>
+                                    /
+                                    <a target="_blank" href="/user/${otherUser.id}" class="zg-link-gray-normal">$!questionCount 提问</a>
+                                    /
+                                    <a target="_blank" href="/user/${otherUser.id}/answers" class="zg-link-gray-normal">$!commentCount 回答</a>
+                                    /
+                                    <a target="_blank" href="" class="zg-link-gray-normal">$!likeCount 赞同</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        #end
+
+
         <div class="zu-main-content">
             <div class="zu-main-content-inner">
                 <div class="zg-section" id="zh-home-list-title">
@@ -38,7 +87,10 @@
                                         </div>
                                         <div class="expandable entry-body">
                                             <div class="zm-item-vote">
-                                                <a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-bind-votecount="">0000</a></div>
+
+
+                                                <a class="zm-item-vote-count js-follow-user" href="javascript:;" data-bind-votecount="">${vo.followerCount}</a></div>
+
                                             <div class="zm-item-answer-author-info">
                                                 <a class="author-link" data-tip="$!{vo.user.name}" target="_blank" href="/user/$!{vo.user.id}">$!{vo.user.name}</a>
                                                 ，$date.format('yyyy-MM-dd HH:mm:ss', $!{vo.question.createdDate})</div>
@@ -54,8 +106,13 @@
                                         <div class="feed-meta">
                                             <div class="zm-item-meta answer-actions clearfix js-contentActions">
                                                 <div class="zm-meta-panel">
-                                                    <a data-follow="q:link" class="follow-link zg-follow meta-item" href="javascript:;" id="sfb-123114">
+                                                    #if(${vo.followed})
+                                                    <a class="follow-link zg-follow meta-item js-follow-question" href="javascript:;" data-id="${vo.question.id}" id="sfb-123114">
+                                                        <i class="z-icon-follow"></i>已关注的问题</a>
+                                                    #else
+                                                    <a class="follow-link zg-follow meta-item js-follow-question" href="javascript:;" data-id="${vo.question.id}" data-status="1">
                                                         <i class="z-icon-follow"></i>关注问题</a>
+                                                    #end
                                                     <a href="/question/${vo.question.id}" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
                                                         <i class="z-icon-comment"></i>${vo.question.commentCount} 条评论</a>
 
@@ -79,4 +136,7 @@
             </div>
         </div>
     </div>
+#parse("js.html")
+<script type="text/javascript" src="/scripts/main/site/detail.js"></script>
+<script type="text/javascript" src="/scripts/main/site/follow.js"></script>
 #parse("footer.html")

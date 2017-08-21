@@ -1,5 +1,8 @@
 package com.nowcoder.controller;
 
+import com.nowcoder.async.EvenModel;
+import com.nowcoder.async.EvenType;
+import com.nowcoder.async.EventProducer;
 import com.nowcoder.model.Comment;
 import com.nowcoder.model.EntityType;
 import com.nowcoder.model.HostHolder;
@@ -38,6 +41,8 @@ public class CommentController {
     HostHolder hostHolder;
     @Autowired
     QuestionService questionService;
+    @Autowired
+    EventProducer eventProducer;
 
     @RequestMapping("/addComment")
     public String addComment(@RequestParam("questionId") int questionId,
@@ -60,6 +65,12 @@ public class CommentController {
             question.setCommentCount(question.getCommentCount()+1);
             commentService.addComment(comment);
             questionService.updateQuestionCommentCount(question);
+            //发起评论问题的事件
+            EvenModel evenModel = new EvenModel(EvenType.COMMENT);
+            evenModel.setActorId(hostHolder.getUser().getId());
+            evenModel.setEntityType(EntityType.TYPE_COMMENT);
+            evenModel.setEntityId(comment.getId());
+            eventProducer.fireEvent(evenModel);
 
         } catch (Exception e) {
             logger.error("用户:"+hostHolder.getUser().getId()+"添加问题评论失败"+e.getMessage());
